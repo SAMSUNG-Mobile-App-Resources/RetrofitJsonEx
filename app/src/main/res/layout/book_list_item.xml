@@ -1,7 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <data>
+        <variable name="index" type="int"/>
+        <variable name="viewModel" type="com.example.retrofitjsonex.viewmodel.DataViewModel"/>
+    </data>
+
+<LinearLayout
     android:layout_width="match_parent"
-    android:layout_height="60dip"
+    android:layout_height="80dip"
     android:orientation="horizontal"
     android:padding="1dip">
 
@@ -15,17 +22,40 @@
         android:layout_margin="0dp"
         android:adjustViewBounds="true"
         android:scaleType="fitCenter"
-        android:src="@drawable/empty"/>
+        app:imageUrl="@{viewModel.listBooks[index].imageURL}"/>
 
-    <TextView
-        android:id="@+id/textTitle"
+    <LinearLayout
         android:layout_width="0dp"
         android:layout_weight="8"
         android:layout_height="match_parent"
-        android:layout_centerVertical="true"
-        android:gravity="center_vertical|left"
-        android:textSize="15sp"
-        android:textColor="#002"
-        android:text="Empty Text"/>
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/textTitle"
+            android:layout_width="match_parent"
+            android:layout_weight="5"
+            android:layout_height="0dp"
+            android:layout_centerVertical="true"
+            android:gravity="center_vertical|left"
+            android:textSize="15sp"
+            android:textColor="#002"
+            android:text="@{viewModel.listBooks[index].title}"/>
+
+        <TextView
+            android:id="@+id/textAuther"
+            android:layout_width="match_parent"
+            android:layout_weight="3"
+            android:layout_height="0dp"
+            android:layout_centerVertical="true"
+            android:gravity="center_vertical|left"
+            android:textSize="12sp"
+            android:textColor="#002"
+            android:text="@{viewModel.listBooks[index].author}"/>
+
+    </LinearLayout>
 
 </LinearLayout>
+
+</layout>

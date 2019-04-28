@@ -1,17 +1,9 @@
-package com.example.retrofitjsonex;
-
-import android.graphics.Bitmap;
+package com.example.retrofitjsonex.model;
 
 public class Book {
-    private String title = null;
-    private String author = null;
-    private String imageURL = null;
-    public Bitmap bmpImage = null;
-
-    public Book(String title, String imageURL) {
-        this.title = title;
-        this.imageURL = imageURL;
-    }
+    protected String title;
+    protected String author;
+    protected String imageURL;
 
     public Book(String title, String author, String imageURL) {
         this.title = title;
