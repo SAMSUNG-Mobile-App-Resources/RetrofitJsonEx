@@ -12,6 +12,11 @@
 
 < Used Android API >
 1. Retrofit
+2. RecyclerView
+3. DataBinding
+4. ViewModel
+5. Glide
+6. Dagger
 
 
 
