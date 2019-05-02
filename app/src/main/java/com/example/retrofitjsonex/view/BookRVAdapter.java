@@ -1,14 +1,12 @@
 package com.example.retrofitjsonex.view;
 
 import android.arch.lifecycle.Observer;
-import android.content.Context;
 import android.databinding.BindingAdapter;
 import android.databinding.DataBindingUtil;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
@@ -20,10 +18,10 @@ import com.example.retrofitjsonex.model.Book;
 import com.example.retrofitjsonex.viewmodel.DataViewModel;
 import java.util.List;
 
-public class BookRVAdapter extends RecyclerView.Adapter<BookRVAdapter.ViewHolder> {
+public class BookRVAdapter extends RecyclerView.Adapter<BookRVAdapter.BookVH> {
     private DataViewModel mViewModel;
     AppCompatActivity mParent;
-    RecyclerView.Adapter<BookRVAdapter.ViewHolder> mAdapter;
+    RecyclerView.Adapter<BookVH> mAdapter;
 
     // Constructor
     public BookRVAdapter(DataViewModel viewModel, AppCompatActivity parent) {
@@ -56,9 +54,9 @@ public class BookRVAdapter extends RecyclerView.Adapter<BookRVAdapter.ViewHolder
 
     // Make ViewHolder & View binding object
     @Override
-    public BookRVAdapter.ViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewType) {
+    public BookVH onCreateViewHolder(ViewGroup viewGroup, int viewType) {
         // Get the view binding object of custom list item layout
-        LayoutInflater inflater = (LayoutInflater)mParent.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        LayoutInflater inflater = LayoutInflater.from(mParent);
         BookListItemBinding binding = DataBindingUtil.inflate(inflater,
                 R.layout.book_list_item, viewGroup, false);
         // Set the Lifecycle Owner of View binding to fragment
@@ -67,18 +65,14 @@ public class BookRVAdapter extends RecyclerView.Adapter<BookRVAdapter.ViewHolder
         binding.setViewModel(mViewModel);
 
         // Make ViewHolder object
-        View view = binding.getRoot();
-        BookRVAdapter.ViewHolder vh = new BookRVAdapter.ViewHolder(view);
-        // Set binding object to ViewHolder object
-        vh.binding = binding;
-        return vh;
+        return new BookVH(binding);
     }
 
     // When ViewHolder is binded set data to binding object
     @Override
-    public void onBindViewHolder(BookRVAdapter.ViewHolder viewHolder, int position) {
+    public void onBindViewHolder(BookVH viewHolder, int position) {
         // Set item index number to binding object
-        viewHolder.binding.setIndex(position);
+        viewHolder.bine(position);
     }
 
     @BindingAdapter({"bind:imageUrl"})
@@ -90,11 +84,18 @@ public class BookRVAdapter extends RecyclerView.Adapter<BookRVAdapter.ViewHolder
     }
 
     // Reuse views
-    public static class ViewHolder extends RecyclerView.ViewHolder {
+    public static class BookVH extends RecyclerView.ViewHolder {
         public BookListItemBinding binding;
 
-        public ViewHolder(View itemView) {
-            super(itemView);
+        //public ViewHolder(View itemView) {
+        public BookVH(BookListItemBinding binding) {
+            super(binding.getRoot());
+            this.binding = binding;
+        }
+
+        public void bine(int index) {
+            binding.setIndex(index);
+            binding.executePendingBindings();
         }
     }
 }
